@@ -8,19 +8,23 @@ import javax.xml.ws.Endpoint;
 public final class GatewayPublisherProgram{
   
     public static void main(String[] args) throws MalformedURLException {
-		if (args.length != 1)
+		if (args.length != 5)
 		{
-			System.err.println("Must pass port number");
+			System.err.println("Must pass port numbers");
 			System.exit(0x80004005); // E_FAIL
 		}
 		
 		try
 		{
-			int port = Integer.parseInt(args[0]);
-			Endpoint.publish("http://localhost:" + port + "/ws/gateway", new GatewayServer());
+			int twPort = Integer.parseInt(args[0]);
+			int twPort2 = Integer.parseInt(args[1]);
+			int fbPort = Integer.parseInt(args[2]);
+			int fbPort2 = Integer.parseInt(args[3]);
+			int gPort = Integer.parseInt(args[4]);
+			Endpoint.publish("http://localhost:" + gPort + "/ws/gateway", new GatewayServer(new int[]{twPort, twPort2}, new int[]{fbPort, fbPort2}));
 		} catch (NumberFormatException e) {
 			System.err.println("Invalid port number");
-			System.exit(0x80070057); // E_INVALIDARG
+			System.exit(0xC00D132C); // NS_E_CURL_INVALIDPORT
 		}
 	}
 }

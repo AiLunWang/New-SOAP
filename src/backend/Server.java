@@ -7,7 +7,7 @@ public class Server {
 
   static
   {
-	  id = 0;
+	  id = 0; //WHY IS THIS COUNT STATIC!!! THIS IS THE CAUSE OF THE ERROR. BOTH SERVERS THINK THEY ARE NUMBER TWO.
   }
   
   public Server() {

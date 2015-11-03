@@ -2,14 +2,14 @@ package client;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
 
-import backend.TwitterService;
-  
-public final class TwitterClientProgram{
-  
-	   public static void main (String[] args) {
+import backend.GatewayService;
+
+public final class GatewayClientProgram {
+	 public static void main (String[] args) {
 	    	if (args.length != 1)
 	    	{
 	    		System.err.println("Must pass port number");
@@ -19,11 +19,12 @@ public final class TwitterClientProgram{
 	    	try
 	    	{
 	    		int port = Integer.parseInt(args[0]);
-	    		URL url = new URL("http://localhost:" + port + "/ws/twitter?wsdl");
-	    		QName qname = new QName("http://backend/", "TwitterServerService");
+	    		URL url = new URL("http://localhost:" + port + "/ws/gateway?wsdl");
+	    		QName qname = new QName("http://backend/", "GatewayServerService");
 	    		Service svc = Service.create(url, qname);
-	    		TwitterService twSvc = svc.getPort(TwitterService.class);
-	    		System.out.println(twSvc.getTwitterInfo());
+	    		GatewayService gSvc = svc.getPort(GatewayService.class);
+	    		System.out.println(gSvc.getFacebookInfo());
+	    		System.out.println(gSvc.getTwitterInfo());
 	    	}
 	    	catch (NumberFormatException e)
 	    	{
@@ -35,5 +36,6 @@ public final class TwitterClientProgram{
 				System.err.println("Malformed URL");
 				System.exit(0xC00D1329); // NS_E_CURL_INVALIDARG
 			}
-	    }
+	    }  
+
 }
